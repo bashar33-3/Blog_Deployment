@@ -1,0 +1,96 @@
+{%include 'head.html'%}
+{{ckeditor.load(pkg_type="basic")}}
+{{ ckeditor.config(name='comment')}}
+
+<style>
+  #comment > p {
+    margin-top: 10px; /* Remove default margin */
+    font-size: 16px; /* Set font size */
+    color: #333; /* Set text color */
+    /* Add any other CSS styles you want */
+}
+</style>
+
+
+<body>
+  <!-- Navigation-->
+  {%include 'header.html'%}
+  <!-- Page Header-->
+  <header class="masthead" style="background-image: url('{{blog.img_url}}')">
+    <div class="container position-relative px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <div class="post-heading">
+            <h1>{{blog.title}}</h1>
+            <h2 class="subheading">{{blog.subtitle}}</h2>
+            <span class="meta">
+              Posted by
+              <a href="#!">{{blog.users.name}}</a>
+              on {{blog.date}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!-- Post Content-->
+  <article class="mb-4">
+    <div class="container px-4 px-lg-5">
+      <div class="row gx-4 gx-lg-5 justify-content-center">
+        <div class="col-md-10 col-lg-8 col-xl-7">
+          <p>{{blog.body|safe}}</p>
+          
+          
+          <form method="post">
+            <div  class="mb-4" style="width: 100%; min-width: 100px;">
+              {{form.hidden_tag()}}
+              {{form.comment.label(class="form-label fw-bold")}}
+              {{form.comment(class="form-control")}}
+              {{form.submit(class="btn btn-primary mt-4")}}
+            </div>
+          </form>
+          {%if comments:%}
+          <section>
+            <div class="container mt-5">
+                <div class="row">
+                    <div class=" col-12 pb-4 px-0 ">
+                        <h3 class="mb-3">Comments</h3>
+                        {%for comment in comments%}
+                        <div class="comment text-justify float-left">
+                            <img src="https://cdn-icons-png.flaticon.com/512/147/147144.png" alt="" class="rounded-circle" width="40" height="40">
+                            <h4 class="mb-0 mt-2">{{comment.users.name}}</h4>
+                            <span style="font-size: 14px;" class="mt-0">{{comment.date}}</span>
+                            <br>
+                            <div id="comment">
+                            {{comment.comment | safe}}
+                            </div>
+
+                            {%if user_id == comment.users.id or user_id == 1:%}
+                            <div class="mb-3">
+                            <a class="fs-6" style="color: red;" href="{{url_for('delete_comment', comment_id=comment.id)}}">Delete Comment</a>
+                          </div>
+                            {%endif%}
+                        </div>
+                        {%endfor%}
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                {%endif%}
+
+      {%if user_id == 1:%}
+
+      <div class="d-flex justify-content-end">
+        <a
+        href="{{url_for('edit_post', blog_id=blog.id)}}"
+        class="btn btn-primary mb-5"
+        >Edit Blog</a
+        >
+      </div>
+      {%endif%}
+    </div>
+
+  </article>
+  <!-- Footer-->
+  {%include 'footer.html'%}
+</body>

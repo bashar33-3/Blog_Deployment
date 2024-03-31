@@ -1,0 +1,93 @@
+{%include 'head.html'%}
+{%include 'header.html'%}
+{{ckeditor.load()}}
+{{ ckeditor.config(name='body') }}
+
+<body>
+    <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Create Post</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container mt-5">
+        <div class="row">
+            <form id="blogForm" method="POST" action="/createpost">
+                <div>
+                {{form.hidden_tag()}}
+                {{form.title.label(class="form-label fw-bold")}}
+                <br>
+                {{form.title(class="form-control")}}
+                <br>
+                {{form.subtitle.label(class="form-label fw-bold")}}
+                <br>
+                {{form.subtitle(class="form-control")}}
+                <br>
+                {{form.image.label(class="form-label fw-bold")}}
+                <br>
+                {{form.image(class="form-control")}}
+                <br>
+                {{form.body.label(class="form-label fw-bold")}}
+                {{form.body(class="form-control")}}
+                <br>
+                {{form.submit(class="btn btn-primary mb-5")}}
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <!-- <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const form = document.getElementById('blogForm');
+    const ckeditorTextarea = document.getElementById('body'); // Get textarea element by ID
+
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        // Get CKEditor content from the textarea element
+        const bodyData = CKEDITOR.instances.body.getData();
+        ckeditorTextarea.innerText = bodyData;
+
+        // Append CKEditor content to form data
+        const formData = new FormData(form);
+        formData.append('body', ckeditorTextarea.innerText);
+
+        fetch('/createpost', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.response.success) {
+                // Blog added successfully, show SweetAlert
+                swal({
+                    title: "Success",
+                    text: data.response.success,
+                    icon: "success",
+                    button: "OK",
+                }).then(() => {
+                    // Clear input fields
+                    form.reset();
+                    // Clear CKEditor content
+                    CKEDITOR.instances.body.setData('');
+                });
+            } else {
+                console.error('Error:', data.error);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+
+    </script> -->
+</body>
+{%include 'footer.html'%}

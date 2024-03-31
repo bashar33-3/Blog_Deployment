@@ -1,0 +1,47 @@
+{%include 'head.html'%}
+{%include 'header.html'%}
+
+<body>
+    <header class="masthead" style="background-image: url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+        <div class="container position-relative px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <div class="site-heading">
+                        <h1>Login</h1>
+                        <h2 class="subheading">Hello Again!</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="container" style="width: 550px; max-width: 100%;">
+        <div class="row">
+            <form method="post" id="loginForm">
+                {{form.hidden_tag()}}
+                {% with email_messages = get_flashed_messages(category_filter=['email_error']) %}
+                {% if email_messages %}
+                            {%for message in email_messages:%}
+                            <p class="flashes" style="color: red; font-style: italic;">{{ message }}</p>
+                            {%endfor%}
+                {% endif %}
+                {% endwith %}
+                {% with password_messages = get_flashed_messages(category_filter=['password_error']) %}
+                    {% if password_messages %}
+                                {%for message in password_messages:%}
+                                <p class="flashes" style="color: red; font-style: italic;">{{ message }}</p>
+                                {%endfor%}
+                    {% endif %}
+                {% endwith %}
+
+                {{form.email.label(class="form-label fw-bold")}} <br> {{form.email(class="form-control")}}
+                {{form.password.label(class="form-label fw-bold mt-4")}} <br> {{form.password(class="form-control")}}
+                <br>{{form.submit2(class="btn btn-primary mb-5")}}
+            </form>
+        </div>
+    </div>
+
+
+
+</body>
+
+{%include 'footer.html'%}
